@@ -26,6 +26,7 @@ env:
   AZURE_WEBAPP_NAME: 'keer-rg-example-app-service'    # set this to your application's name
       # set this to the path to your web app project, defaults to the repository root
   NODE_VERSION: '16.x'                # set this to the node version to use
+  
 
 permissions:
   contents: read
@@ -64,6 +65,11 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
+    - name: Log in to Azure
+      uses: azure/login@v1
+      with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          
     - name: Download artifact from build job
       uses: actions/download-artifact@v3
       with:
@@ -75,4 +81,5 @@ jobs:
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        tenant-id: ${{ secrets.AZURE_CREDENTIALS_TENANT_ID }}
         
