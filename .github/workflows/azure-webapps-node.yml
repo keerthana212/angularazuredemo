@@ -64,12 +64,7 @@ jobs:
       name: 'Development'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
-    steps:
-    - name: Log in to Azure
-      uses: azure/login@v1
-      with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-          
+    steps:        
     - name: Download artifact from build job
       uses: actions/download-artifact@v3
       with:
@@ -81,5 +76,5 @@ jobs:
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-        tenant-id: ${{ secrets.AZURE_CREDENTIALS_TENANT_ID }}
+        
         
